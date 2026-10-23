@@ -1,181 +1,178 @@
+<script setup lang="ts">
+import Academy from '@/components/site/Academy.vue';
+import Automation from '@/components/site/Automation.vue';
+import ContactUs from '@/components/site/ContactUs.vue';
+import Faq from '@/components/site/Faq.vue';
+import Hero from '@/components/site/Hero.vue';
+import Process from '@/components/site/Process.vue';
+import Services from '@/components/site/Services.vue';
+import SiteFooter from '@/components/site/SiteFooter.vue';
+import SiteHeader from '@/components/site/SiteHeader.vue';
+import Team from '@/components/site/Team.vue';
+import Work from '@/components/site/Work.vue';
+import { Head } from '@inertiajs/vue3';
+import { onBeforeUnmount, onMounted } from 'vue';
+
+defineProps<{ canRegister?: boolean }>();
+
+const description =
+    'Stechmax is a digital agency for premium website design & development, custom web applications and business process automation — plus Stechmax Academy, where we teach these skills.';
+
+const stack = [
+    'Laravel',
+    'Vue',
+    'React',
+    'Next.js',
+    'WordPress',
+    'Shopify',
+    'Tailwind CSS',
+    'Node.js',
+    'Python',
+    'n8n',
+    'Zapier',
+    'Make',
+    'OpenAI',
+    'Paystack',
+    'Flutterwave',
+    'AWS',
+];
+
+const stats = [
+    { value: '150+', label: 'Projects delivered' },
+    { value: '10+', label: 'Years of experience' },
+    { value: '12+', label: 'Industries served' },
+    { value: '98%', label: 'Client satisfaction' },
+];
+
+let observer: IntersectionObserver | null = null;
+
+onMounted(() => {
+    observer = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                if (!entry.isIntersecting) continue;
+                entry.target.classList.add('is-visible');
+                observer?.unobserve(entry.target);
+            }
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+    );
+    document
+        .querySelectorAll('[data-reveal]')
+        .forEach((el) => observer?.observe(el));
+});
+
+onBeforeUnmount(() => observer?.disconnect());
+</script>
+
 <template>
-    <div class="bg-[#0B0F1A] font-sans text-gray-100">
-        <!-- HERO -->
-        <Hero />
+    <Head title="Digital Agency — Web Design, Development & Automation">
+        <meta
+            head-key="description"
+            name="description"
+            :content="description"
+        />
+        <link
+            head-key="canonical"
+            rel="canonical"
+            href="https://stechmax.com/"
+        />
+        <meta head-key="og:type" property="og:type" content="website" />
+        <meta
+            head-key="og:site_name"
+            property="og:site_name"
+            content="Stechmax"
+        />
+        <meta
+            head-key="og:title"
+            property="og:title"
+            content="Stechmax — Digital Agency for Web Design, Development & Automation"
+        />
+        <meta
+            head-key="og:description"
+            property="og:description"
+            :content="description"
+        />
+        <meta
+            head-key="og:url"
+            property="og:url"
+            content="https://stechmax.com/"
+        />
+        <meta
+            head-key="twitter:card"
+            name="twitter:card"
+            content="summary_large_image"
+        />
+        <meta head-key="theme-color" name="theme-color" content="#07080c" />
+    </Head>
 
-        <!-- TRUST STATS -->
-        <section class="border-y border-gray-800 bg-[#020617]">
-            <div
-                class="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 py-12 text-center md:grid-cols-4"
+    <div
+        class="min-h-screen bg-[#07080c] font-sans text-white antialiased selection:bg-[#e3ae45]/30"
+    >
+        <SiteHeader />
+
+        <main>
+            <Hero />
+
+            <!-- Technology marquee -->
+            <section
+                class="relative border-y border-white/[0.06] bg-[#05060a] py-8"
+                aria-label="Technologies we work with"
             >
-                <Stat label="Projects Delivered" value="150+" />
-                <Stat label="Years Experience" value="10+" />
-                <Stat label="Industries Served" value="12+" />
-                <Stat label="Client Satisfaction" value="98%" />
-            </div>
-        </section>
-
-        <!-- SERVICES -->
-        <Services />
-
-        <!-- PROJECTS (FULL BLEED) -->
-        <section id="projects" class="w-full">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-                <ProjectCard
-                    title="Enterprise E‑Commerce"
-                    image="/images/enterprise.jpg"
-                    link="#"
-                    bg="bg-[#1A1F36]"
-                />
-                <ProjectCard
-                    title="School Portal"
-                    image="/images/portal.jpg"
-                    link="#"
-                    bg="bg-[#111827]"
-                />
-                <ProjectCard
-                    title="Corporate Website"
-                    image="https://images.unsplash.com/photo-1498050108023-c5249f4df085"
-                    link="#"
-                    bg="bg-[#2A1F1D]"
-                />
-                <ProjectCard
-                    title="Retail Store"
-                    image="https://images.unsplash.com/photo-1545239351-1141bd82e8a6"
-                    link="#"
-                    bg="bg-[#1F2937]"
-                />
-            </div>
-        </section>
-
-        <section id="team" class="mx-auto max-w-7xl px-6 py-28">
-            <!-- Section Header -->
-            <div class="mb-20 text-center">
-                <h2 class="text-4xl font-bold text-white">
-                    Meet the Experts Behind Stechmax
-                </h2>
-                <p class="mx-auto mt-6 max-w-2xl text-gray-400">
-                    A multidisciplinary team of designers, engineers, and
-                    strategists committed to building high-impact digital
-                    solutions.
-                </p>
-            </div>
-
-            <!-- Team Grid -->
-            <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-                <!-- Team Member -->
                 <div
-                    class="group rounded-2xl bg-neutral-900/80 p-6 text-center shadow-lg backdrop-blur transition hover:shadow-2xl"
+                    class="overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_12%,black_88%,transparent)]"
+                >
+                    <ul class="animate-marquee flex w-max gap-14 pr-14">
+                        <li
+                            v-for="(tech, i) in [...stack, ...stack]"
+                            :key="i"
+                            :aria-hidden="i >= stack.length"
+                            class="text-lg font-medium whitespace-nowrap text-white/35"
+                        >
+                            {{ tech }}
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <Services />
+
+            <Automation />
+
+            <!-- Stats -->
+            <section class="mx-auto max-w-7xl px-6">
+                <div
+                    data-reveal
+                    class="grid grid-cols-2 gap-px overflow-hidden rounded-3xl glass lg:grid-cols-4"
                 >
                     <div
-                        class="relative mb-6 aspect-square w-full overflow-hidden rounded-xl"
+                        v-for="stat in stats"
+                        :key="stat.label"
+                        class="px-6 py-10 text-center"
                     >
-                        <img
-                            src="/images/success.webp"
-                            alt="John Doe"
-                            class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                        />
+                        <p class="text-gold font-display text-5xl lg:text-6xl">
+                            {{ stat.value }}
+                        </p>
+                        <p class="mt-3 text-sm text-white/50">
+                            {{ stat.label }}
+                        </p>
                     </div>
-                    <h3 class="text-lg font-semibold text-white">
-                        Ikong Simon
-                    </h3>
-                    <p class="mt-1 font-medium text-amber-500">
-                        Lead Software Engineer
-                    </p>
-                    <p class="mt-3 text-sm text-gray-400">
-                        Specializes in scalable web systems, API architecture,
-                        and performance-driven solutions.
-                    </p>
                 </div>
+            </section>
 
-                <!-- Team Member -->
-                <div
-                    class="group rounded-2xl bg-neutral-900/80 p-6 text-center shadow-lg backdrop-blur transition hover:shadow-2xl"
-                >
-                    <div
-                        class="relative mb-6 aspect-square w-full overflow-hidden rounded-xl"
-                    >
-                        <img
-                            src="/images/alex.webp"
-                            alt="Jane Smith"
-                            class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                        />
-                    </div>
-                    <h3 class="text-lg font-semibold text-white">David Alex</h3>
-                    <p class="mt-1 font-medium text-amber-500">
-                        UI / UX Designer
-                    </p>
-                    <p class="mt-3 text-sm text-gray-400">
-                        Focused on user-centered design, accessibility, and
-                        premium brand experiences.
-                    </p>
-                </div>
+            <Work />
 
-                <!-- Team Member -->
-                <div
-                    class="group rounded-2xl bg-neutral-900/80 p-6 text-center shadow-lg backdrop-blur transition hover:shadow-2xl"
-                >
-                    <div
-                        class="relative mb-6 aspect-square w-full overflow-hidden rounded-xl"
-                    >
-                        <img
-                            src="/images/israel.webp"
-                            alt="Michael Lee"
-                            class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                        />
-                    </div>
-                    <h3 class="text-lg font-semibold text-white">
-                        Israel Atuo
-                    </h3>
-                    <p class="mt-1 font-medium text-amber-500">
-                        Backend & DevOps Engineer
-                    </p>
-                    <p class="mt-3 text-sm text-gray-400">
-                        Handles server infrastructure, security, CI/CD
-                        pipelines, and cloud deployments.
-                    </p>
-                </div>
+            <Process />
 
-                <!-- Team Member -->
-                <div
-                    class="group rounded-2xl bg-neutral-900/80 p-6 text-center shadow-lg backdrop-blur transition hover:shadow-2xl"
-                >
-                    <div
-                        class="relative mb-6 aspect-square w-full overflow-hidden rounded-xl"
-                    >
-                        <img
-                            src="/images/resa.webp"
-                            alt="Sarah Ade"
-                            class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                        />
-                    </div>
-                    <h3 class="text-lg font-semibold text-white">
-                        Theresa Ushie
-                    </h3>
-                    <p class="mt-1 font-medium text-amber-500">
-                        Digital Product Manager
-                    </p>
-                    <p class="mt-3 text-sm text-gray-400">
-                        Oversees product strategy, client communication, and
-                        delivery timelines.
-                    </p>
-                </div>
-            </div>
-        </section>
+            <Team />
 
-        <!-- CTA -->
-        <ContactUs />
+            <Academy />
 
-        <footer class="bg-black py-10 text-center text-gray-500">
-            © {{ new Date().getFullYear() }} Stechmax Ltd
-        </footer>
+            <Faq />
+
+            <ContactUs />
+        </main>
+
+        <SiteFooter />
     </div>
 </template>
-
-<script setup>
-import ProjectCard from '@/components/ProjectCard.vue';
-import Stat from '@/components/Stat.vue';
-import ContactUs from '@/pages/ContactUs.vue';
-import Hero from '@/pages/Hero.vue';
-import Services from '@/pages/Services.vue';
-</script>
